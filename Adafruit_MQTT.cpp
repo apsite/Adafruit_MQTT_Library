@@ -899,32 +899,33 @@ uint8_t Adafruit_MQTT::disconnectPacket(uint8_t *packet) {
 // Adafruit_MQTT_Publish Definition ////////////////////////////////////////////
 
 Adafruit_MQTT_Publish::Adafruit_MQTT_Publish(Adafruit_MQTT *mqttserver,
-                                             const char *feed, uint8_t q) {
+                                             const char *feed, uint8_t q, bool r) {
   mqtt = mqttserver;
   topic = feed;
   qos = q;
+  retain = r;
 }
 bool Adafruit_MQTT_Publish::publish(int32_t i) {
   char payload[12];
   ltoa(i, payload, 10);
-  return mqtt->publish(topic, payload, qos);
+  return mqtt->publish(topic, payload, qos, retain);
 }
 
 bool Adafruit_MQTT_Publish::publish(uint32_t i) {
   char payload[11];
   ultoa(i, payload, 10);
-  return mqtt->publish(topic, payload, qos);
+  return mqtt->publish(topic, payload, qos, retain);
 }
 
 bool Adafruit_MQTT_Publish::publish(double f, uint8_t precision) {
   char payload[41]; // Need to technically hold float max, 39 digits and minus
                     // sign.
   dtostrf(f, 0, precision, payload);
-  return mqtt->publish(topic, payload, qos);
+  return mqtt->publish(topic, payload, qos, retain);
 }
 
 bool Adafruit_MQTT_Publish::publish(const char *payload) {
-  return mqtt->publish(topic, payload, qos);
+  return mqtt->publish(topic, payload, qos, retain);
 }
 
 // publish buffer of arbitrary length

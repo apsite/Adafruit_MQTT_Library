@@ -276,7 +276,7 @@ private:
 class Adafruit_MQTT_Publish {
 public:
   Adafruit_MQTT_Publish(Adafruit_MQTT *mqttserver, const char *feed,
-                        uint8_t qos = 0);
+                        uint8_t qos = 0, bool retain = false);
 
   bool publish(const char *s);
   bool publish(
@@ -292,6 +292,7 @@ private:
   Adafruit_MQTT *mqtt;
   const char *topic;
   uint8_t qos;
+  bool retain;
 };
 
 class Adafruit_MQTT_Subscribe {
